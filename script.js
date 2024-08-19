@@ -1,42 +1,27 @@
-function generatePassword(length , includeLowercase , includeUppercase , includeSymbols ){
-    
-    const lowercaseChar = "abcdefghijklmnopqrstuvwxyz" ;
-    const uppercaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" ;
-    const numbarChar = "0123457689" ;
-    const symbolChar = "!@#$%^&*()_+?><:" ;
+const passwordBox = document.getElementById("password");
+let lengthA = 10;
+let upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let lowerCase = "abcdefghijklmnopqrstuvwxyz";
+let number = "0123456789";
+let symbol = "!@#$%^&*()_+:;><?";
 
-    let allowedChar = "" ;
-    let password = "" ;
+const allChars = upperCase + lowerCase + number + symbol ;
 
-    allowedChar += includeLowercase ? lowercaseChar : "" ;
-    allowedChar += includeUppercase ? uppercaseChar : "" ;
-    allowedChar += includeNumbers ? numbarChar : "" ;
-    allowedChar += includeSymbols ? symbolChar : "" ;
+function createPassword(){
+    let Password = "";
+    Password += upperCase[Math.floor(Math.random() * upperCase.length)];
+    Password += lowerCase[Math.floor(Math.random() * lowerCase.length)];
+    Password += number[Math.floor(Math.random() * number.length)];
+    Password += symbol[Math.floor(Math.random() * symbol.length)];
 
-        if(length <= 0){
-            return `(Password length must be atleast 12)` ;
-        }
-        if(allowedChar.length===0){
-            return `(At least 1 set of character needs to be selected)`;
-        }
-        for(let i = 0 ; i<length ; i++){
-            const randomIndex = Math.floor(Math.random() * allowedChar.length)
-            password += allowedChar[randomIndex] ;
-        }
-    return password ;
+    while(lengthA > Password.length){
+        Password += allChars[Math.floor(Math.random() * allChars.length)];
+    }
+
+    passwordBox.value = Password; 
 }
-    const passwordLength = 12 ;
-    const includeLowercase = true ;
-    const includeNumbers = true ;
-    const  includeUppercase = true ;
-    const includeSymbols = false ;
 
-    const password = generatePassword(passwordLength ,
-                                     includeLowercase ,
-                                     includeNumbers , 
-                                     includeSymbols ,
-                                      includeUppercase)
-
-                                      console.log(`Generated password: ${password}`);
-
-
+function copyPass(){
+    passwordBox.select();
+    document.execCommand("copy");
+}
